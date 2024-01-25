@@ -4,7 +4,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	greeting_v1 "pilotoGRPC/pkg/pb/greeting/v1"
 	"syscall"
 
 	"go.uber.org/zap"
@@ -26,7 +25,7 @@ func main() {
 	server = grpc.NewServer()
 
 	// Register gRPC server
-	greeting_v1.RegisterGreetServiceServer(server, &greeting_v1.UnimplementedGreetServiceServer{})
+	//greeting_v1.RegisterGreetServiceServer(server, &greeting_v1.UnimplementedGreetServiceServer{})
 
 	go signalsListener(server)
 
