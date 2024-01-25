@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package greeting.v1;
+
+option go_package = "github.com/charliecwb/pilotogrpc/pkg/pb/greeting";
+
+import "greeting/common/message.proto";
+
+message GreetRequest {
+  common.Message msg = 1;
+}
+
+message GreetResponse {
+  string resp = 1;
+}
