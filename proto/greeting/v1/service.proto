@@ -13,3 +13,7 @@ message GreetRequest {
 message GreetResponse {
   string resp = 1;
 }
+
+service GreetService {
+  rpc Greet(GreetRequest) returns (GreetResponse);
+}

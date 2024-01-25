@@ -7,7 +7,11 @@
 package greeting_v1
 
 import (
+	context "context"
 	v1 "github.com/charliecwb/pilotogrpc/pkg/pb/greeting/common/v1"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -128,7 +132,12 @@ var file_greeting_v1_service_proto_rawDesc = []byte{
 	0x6e, 0x67, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x73,
 	0x73, 0x61, 0x67, 0x65, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x23, 0x0a, 0x0d, 0x47, 0x72, 0x65,
 	0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x65,
-	0x73, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x72, 0x65, 0x73, 0x70, 0x42, 0x41,
+	0x73, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x72, 0x65, 0x73, 0x70, 0x32, 0x4e,
+	0x0a, 0x0c, 0x47, 0x72, 0x65, 0x65, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3e,
+	0x0a, 0x05, 0x47, 0x72, 0x65, 0x65, 0x74, 0x12, 0x19, 0x2e, 0x67, 0x72, 0x65, 0x65, 0x74, 0x69,
+	0x6e, 0x67, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x72, 0x65, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x67, 0x72, 0x65, 0x65, 0x74, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31,
+	0x2e, 0x47, 0x72, 0x65, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x41,
 	0x5a, 0x3f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x68, 0x61,
 	0x72, 0x6c, 0x69, 0x65, 0x63, 0x77, 0x62, 0x2f, 0x70, 0x69, 0x6c, 0x6f, 0x74, 0x6f, 0x67, 0x72,
 	0x70, 0x63, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x62, 0x2f, 0x67, 0x72, 0x65, 0x65, 0x74, 0x69,
@@ -156,8 +165,10 @@ var file_greeting_v1_service_proto_goTypes = []interface{}{
 }
 var file_greeting_v1_service_proto_depIdxs = []int32{
 	2, // 0: greeting.v1.GreetRequest.msg:type_name -> greeting.common.v1.Message
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
+	0, // 1: greeting.v1.GreetService.Greet:input_type -> greeting.v1.GreetRequest
+	1, // 2: greeting.v1.GreetService.Greet:output_type -> greeting.v1.GreetResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -202,7 +213,7 @@ func file_greeting_v1_service_proto_init() {
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_greeting_v1_service_proto_goTypes,
 		DependencyIndexes: file_greeting_v1_service_proto_depIdxs,
@@ -212,4 +223,84 @@ func file_greeting_v1_service_proto_init() {
 	file_greeting_v1_service_proto_rawDesc = nil
 	file_greeting_v1_service_proto_goTypes = nil
 	file_greeting_v1_service_proto_depIdxs = nil
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConnInterface
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion6
+
+// GreetServiceClient is the client API for GreetService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type GreetServiceClient interface {
+	Greet(ctx context.Context, in *GreetRequest, opts ...grpc.CallOption) (*GreetResponse, error)
+}
+
+type greetServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewGreetServiceClient(cc grpc.ClientConnInterface) GreetServiceClient {
+	return &greetServiceClient{cc}
+}
+
+func (c *greetServiceClient) Greet(ctx context.Context, in *GreetRequest, opts ...grpc.CallOption) (*GreetResponse, error) {
+	out := new(GreetResponse)
+	err := c.cc.Invoke(ctx, "/greeting.v1.GreetService/Greet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// GreetServiceServer is the server API for GreetService service.
+type GreetServiceServer interface {
+	Greet(context.Context, *GreetRequest) (*GreetResponse, error)
+}
+
+// UnimplementedGreetServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedGreetServiceServer struct {
+}
+
+func (*UnimplementedGreetServiceServer) Greet(context.Context, *GreetRequest) (*GreetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Greet not implemented")
+}
+
+func RegisterGreetServiceServer(s *grpc.Server, srv GreetServiceServer) {
+	s.RegisterService(&_GreetService_serviceDesc, srv)
+}
+
+func _GreetService_Greet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GreetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreetServiceServer).Greet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/greeting.v1.GreetService/Greet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreetServiceServer).Greet(ctx, req.(*GreetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _GreetService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "greeting.v1.GreetService",
+	HandlerType: (*GreetServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Greet",
+			Handler:    _GreetService_Greet_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "greeting/v1/service.proto",
 }
