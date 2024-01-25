@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package greeting.common;
+package greeting.common.v1;
 
-option go_package = "github.com/charliecwb/pilotogrpc/pkg/pb/greeting/common";
+option go_package = "github.com/charliecwb/pilotogrpc/pkg/pb/greeting/common/v1;common_v1";
 
 message Message {
   enum Greeter {
